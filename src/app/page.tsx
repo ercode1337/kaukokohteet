@@ -1,102 +1,132 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [depart, setDepart] = useState("");
+  const [ret, setRet] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const topPills = ["Lennot", "Hotellit", "Autonvuokraus"];
+
+  return (
+    <div className="landing-root">
+      <header className="hero-dark">
+        <div className="container header-inner">
+          <div className="logo">
+            <Image src="/travel/logo.png" alt="KaukoKohteet.fi" width={180} height={60} />
+          </div>
+          <div className="header-right">
+            <div className="header-links">Ohjeet · ♥ · Kirjaudu sisään</div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        <div className="container hero-content">
+          <div className="pills">
+            {topPills.map((p) => (
+              <button className="pill" key={p}>{p}</button>
+            ))}
+          </div>
+
+          <h1 className="hero-h">Miljoonia halpoja lentoja. Yksi yksinkertainen haku.</h1>
+
+          <div className="search-card-wrapper">
+            <form className="search-card" onSubmit={(e)=>{e.preventDefault(); alert(`Haku: ${from} -> ${to}`);}}>
+              <div className="search-fields">
+                <div className="input">
+                  <label>Lähtöpaikka</label>
+                  <input className="search-input" type="text" value={from} onChange={(e)=>setFrom(e.target.value)} placeholder="Helsinki (HEL)" />
+                </div>
+
+                <div className="input">
+                  <label>Kohteeseen</label>
+                  <input className="search-input" type="text" value={to} onChange={(e)=>setTo(e.target.value)} placeholder="Lontoo (LHR)" />
+                </div>
+
+                <div className="input small">
+                  <label>Lähtö</label>
+                  <input className="search-input" type="date" value={depart} onChange={(e)=>setDepart(e.target.value)} />
+                </div>
+
+                <div className="input small">
+                  <label>Paluu</label>
+                  <input className="search-input" type="date" value={ret} onChange={(e)=>setRet(e.target.value)} />
+                </div>
+
+                <button className="btn btn-search" type="submit">Hae</button>
+              </div>
+            </form>
+          </div>
+
+          <div className="subrow">
+            <label><input type="checkbox" /> Lisää lähiseudun lentokentät</label>
+            <label><input type="checkbox" /> Suorat lennot</label>
+            <button className="btn btn-ghost">Kirjaudu sisään</button>
+          </div>
+        </div>
+      </header>
+
+      <section className="categories container">
+        <div className="category-btn">Hotellit</div>
+        <div className="category-btn">Autonvuokraus</div>
+        <div className="category-btn">Tutki kaikkia kohteita</div>
+      </section>
+
+      <section className="destinations-section container">
+        <div className="destinations-grid">
+          <div className="destination-card">
+            <div className="destination-image thailand1"></div>
+            <div className="destination-info">
+              <h3>Shaa Shin Bai Resort</h3>
+              <p className="destination-price">€899</p>
+              <p className="destination-date">1 week in December</p>
+            </div>
+          </div>
+          
+          <div className="destination-card">
+            <div className="destination-image thailand2"></div>
+            <div className="destination-info">
+              <h3>Tropical Paradise Hotel</h3>
+              <p className="destination-price">€1,299</p>
+              <p className="destination-date">10 days in January</p>
+            </div>
+          </div>
+          
+          <div className="destination-card">
+            <div className="destination-image costarica"></div>
+            <div className="destination-info">
+              <h3>Costa Rica Beach Resort</h3>
+              <p className="destination-price">€1,599</p>
+              <p className="destination-date">2 weeks in February</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="banner container">
+        <div className="banner-inner">
+          <div className="banner-text">
+            <p className="kicker">Etkö osaa päättää minne matkustaisit?</p>
+            <h2>Tutki kaikkia kohteita</h2>
+            <button className="btn btn-primary">Hae lentoja kaikkiin kohteisiin</button>
+          </div>
+          <div className="banner-media">
+            <Image src="/sun2.svg" alt="banner" width={920} height={340} />
+          </div>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <div className="container">
+          <div>© {new Date().getFullYear()} KaukoMatkat</div>
+          <div className="links">
+            <a>About</a>
+            <a>Privacy</a>
+            <a>Contact</a>
+          </div>
+        </div>
       </footer>
     </div>
   );

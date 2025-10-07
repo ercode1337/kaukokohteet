@@ -1,0 +1,66 @@
+Please copy these image files from travel-one-page-website-main/img into public/travel/img (preserve names):
+
+airbnb.png
+amazon.png
+calender-icon.png
+city.png
+dark-logo.png
+david-pfp.png
+Destination 1.png
+Destination 2.png
+Destination 3.png
+Destination 4.png
+destination1.png
+destination2.png
+destination3.png
+double-quotes-left.png
+double-quotes-right.png
+eiffel tower.png
+Ellipse 31.png
+Ellipse 32.png
+Ellipse 33.png
+Ellipse 34.png
+Ellipse 35.png
+Ellipse 36.png
+Ellipse 37.png
+emily-pfp.png
+fly emirates.png
+Footer img.png
+g1.png
+g2.png
+g3.png
+g4.png
+giza.png
+heroimg.png
+icon-arrow-down.png
+icon-linkedin.png
+icon-messenger.png
+icon-triangle-down.png
+icon-twitter.png
+icon-twoo.png
+icon1.png
+icon2.png
+icon3.png
+image.png
+liberty.png
+line asset 2.png
+line asset.png
+location-icon.png
+logo.png
+menu-icon.png
+nature.png
+navigation-icon.png
+profile-icon.png
+readme-btn.png
+review-bg.png
+review-profile-picture.png
+star-icon.png
+swiss.png
+switzer-land.png
+travel-concept.png
+tripimg.png
+trivago.png
+turkish airlines.png
+vector1.png
+
+After copying, open http://localhost:3000/travel/index.html to view the landing page.
