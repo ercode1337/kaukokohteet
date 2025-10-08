@@ -1,15 +1,121 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import DatePicker from "../components/DatePicker";
 
 export default function Home() {
   const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
   const [depart, setDepart] = useState("");
   const [ret, setRet] = useState("");
+  const [showDestinations, setShowDestinations] = useState(false);
+  
+  const destinations = {
+    "AASIA": [
+      "Thaimaa",
+      "Vietnam",
+      "Indonesia (Bali)",
+      "Sri Lanka",
+      "Japani",
+      "Etelä-Korea",
+      "Kiina",
+      "Hongkong",
+      "Intia",
+      "Malesia",
+      "Singapore",
+      "Filippiinit"
+    ],
+    "AFRIKKA": [
+      "Tansania (Zanzibar)",
+      "Kenia",
+      "Etelä-Afrikka",
+      "Marokko",
+      "Egypti",
+      "Kap Verde",
+      "Mauritius",
+      "Seychellit"
+    ],
+    "OSEANIA": [
+      "Australia",
+      "Uusi-Seelanti",
+      "Fidži"
+    ],
+    "POHJOIS- JA ETELÄ-AMERIKKA": [
+      "Yhdysvallat (Florida, Havaiji)",
+      "Meksiko",
+      "Kuuba",
+      "Dominikaaninen tasavalta",
+      "Costa Rica",
+      "Brasilia",
+      "Peru",
+      "Chile"
+    ],
+    "LÄHI-ITÄ": [
+      "Arabiemiraatit (Dubai, Abu Dhabi)",
+      "Oman",
+      "Qatar",
+      "Jordania"
+    ]
+  };
+
+  // Initialize with all destinations selected
+  const allDestinations = Object.values(destinations).flat();
+  const [selectedDestinations, setSelectedDestinations] = useState<string[]>(allDestinations);
+  const [to, setTo] = useState("Kaikki kohteet");
+  
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const topPills = ["Lennot", "Hotellit", "Autonvuokraus"];
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowDestinations(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleDestinationSelect = (destination: string) => {
+    const allDestinations = Object.values(destinations).flat();
+    const isSelected = selectedDestinations.includes(destination);
+    let newSelectedDestinations;
+    
+    if (isSelected) {
+      newSelectedDestinations = selectedDestinations.filter(d => d !== destination);
+    } else {
+      newSelectedDestinations = [...selectedDestinations, destination];
+    }
+    
+    setSelectedDestinations(newSelectedDestinations);
+    
+    // Show "Kaikki kohteet" if all destinations are selected, otherwise show the list
+    if (newSelectedDestinations.length === allDestinations.length) {
+      setTo("Kaikki kohteet");
+    } else if (newSelectedDestinations.length === 0) {
+      setTo("");
+    } else {
+      setTo(newSelectedDestinations.join(", "));
+    }
+  };
+
+  const handleSelectAllDestinations = () => {
+    const allDestinations = Object.values(destinations).flat();
+    const isAllSelected = allDestinations.every(dest => selectedDestinations.includes(dest));
+    
+    if (isAllSelected) {
+      setSelectedDestinations([]);
+      setTo("");
+    } else {
+      setSelectedDestinations(allDestinations);
+      setTo("Kaikki kohteet");
+    }
+  };
 
   return (
     <div className="landing-root">
@@ -30,7 +136,7 @@ export default function Home() {
             ))}
           </div>
 
-          <h1 className="hero-h">Miljoonia halpoja lentoja. Yksi yksinkertainen haku.</h1>
+          <h1 className="hero-h">Miljoonia halpoja matkoja. Yksi yksinkertainen haku.</h1>
 
           <div className="search-card-wrapper">
             <form className="search-card" onSubmit={(e)=>{e.preventDefault(); alert(`Haku: ${from} -> ${to}`);}}>
@@ -40,19 +146,76 @@ export default function Home() {
                   <input className="search-input" type="text" value={from} onChange={(e)=>setFrom(e.target.value)} placeholder="Helsinki (HEL)" />
                 </div>
 
-                <div className="input">
+                <div className="input destination-input">
                   <label>Kohteeseen</label>
-                  <input className="search-input" type="text" value={to} onChange={(e)=>setTo(e.target.value)} placeholder="Lontoo (LHR)" />
+                  <div className="destination-wrapper" ref={dropdownRef}>
+                    <input 
+                      className="search-input" 
+                      type="text" 
+                      value={to} 
+                      placeholder="Valitse kohde"
+                      onFocus={() => setShowDestinations(true)}
+                      onClick={() => setShowDestinations(true)}
+                      readOnly
+                    />
+                    <button 
+                      type="button" 
+                      className="dropdown-btn"
+                      onClick={() => setShowDestinations(!showDestinations)}
+                    >
+                      ▼
+                    </button>
+                    {showDestinations && (
+                      <div className="destinations-dropdown">
+                        <div className="select-all-option">
+                          <input
+                            type="checkbox"
+                            checked={Object.values(destinations).flat().every(dest => selectedDestinations.includes(dest))}
+                            onChange={handleSelectAllDestinations}
+                          />
+                          <span>Kaikki kohteet</span>
+                        </div>
+                        {Object.entries(destinations).map(([category, places]) => (
+                          <div key={category} className="destination-category">
+                            <div className="category-header">{category}</div>
+                            {places.map((place) => (
+                              <div 
+                                key={place}
+                                className="destination-option"
+                                onClick={() => handleDestinationSelect(place)}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={selectedDestinations.includes(place)}
+                                  onChange={() => handleDestinationSelect(place)}
+                                  onClick={(e) => e.stopPropagation()}
+                                />
+                                <span>{place}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="input small">
-                  <label>Lähtö</label>
-                  <input className="search-input" type="date" value={depart} onChange={(e)=>setDepart(e.target.value)} />
+                  <DatePicker
+                    value={depart}
+                    onChange={setDepart}
+                    label="Lähtö"
+                    placeholder="pp/kk/vvvv"
+                  />
                 </div>
 
                 <div className="input small">
-                  <label>Paluu</label>
-                  <input className="search-input" type="date" value={ret} onChange={(e)=>setRet(e.target.value)} />
+                  <DatePicker
+                    value={ret}
+                    onChange={setRet}
+                    label="Paluu"
+                    placeholder="pp/kk/vvvv"
+                  />
                 </div>
 
                 <button className="btn btn-search" type="submit">Hae</button>
