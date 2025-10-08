@@ -41,7 +41,7 @@ body {
 .btn { padding:8px 12px; border-radius:10px; cursor:pointer; border:1px solid transparent; }
 .btn-outline { background:transparent; border-color:rgba(17,24,39,0.06); }
 
-.btn-primary { background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:10px; box-shadow:0 6px 20px rgba(255,176,32,0.12); }
+.btn-primary { background:#06283d; color:white; border:0; padding:10px 14px; border-radius:10px; box-shadow:0 6px 20px rgba(6,40,61,0.12); }
 .btn-search { background:#0b76a8; color:white; border:0; padding:10px 18px; border-radius:10px; box-shadow:0 8px 28px rgba(11,118,168,0.12); }
 .btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.08); color:white; }
 
@@ -81,9 +81,9 @@ body {
 
 .banner { padding:26px 0 60px; background:#FAFAFA; }
 .banner-inner { display:flex; gap:24px; align-items:center; background:white; border-radius:12px; overflow:hidden; }
-.banner-text { padding:28px; flex:1; }
+.banner-text { padding:28px; flex:1; color:#0b0b0b }
 .banner-text .kicker { color:#6b7280; margin:0 0 10px; }
-.banner-text h2 { margin:0 0 16px; font-size:32px; }
+.banner-text h2 { margin:0 0 16px; font-size:32px; color:#0b0b0b; }
 .banner-media { flex:1; }
 
 /* Destinations grid */
@@ -96,9 +96,9 @@ body {
 .card-title { margin:0 0 6px; font-size:18px; }
 .card-sub { color:rgba(17,24,39,0.65); font-size:13px }
 
-.site-footer { border-top:1px solid rgba(0,0,0,0.06); padding:18px 0; margin-top:auto; }
+.site-footer { border-top:1px solid rgba(0,0,0,0.06); padding:18px 0; margin-top:auto; color:#0b0b0b;}
 .site-footer .container { display:flex; justify-content:space-between; align-items:center; }
-.site-footer .links { display:flex; gap:12px; }
+.site-footer .links { display:flex; gap:12px; color:#0b0b0b; }
 
 /* Destinations section */
 .destinations-section { padding:40px 0; background:#FAFAFA; }

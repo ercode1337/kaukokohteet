@@ -113,18 +113,18 @@ export default function Home() {
             <button className="btn btn-primary">Hae lentoja kaikkiin kohteisiin</button>
           </div>
           <div className="banner-media">
-            <Image src="/sun2.svg" alt="banner" width={920} height={340} />
+            <Image src="/thailand-banner.jpg" alt="banner" width={920} height={340} />
           </div>
         </div>
       </section>
 
       <footer className="site-footer">
         <div className="container">
-          <div>© {new Date().getFullYear()} KaukoMatkat</div>
+          <div>© {new Date().getFullYear()} Kaukomatkat.fi</div>
           <div className="links">
-            <a>About</a>
-            <a>Privacy</a>
-            <a>Contact</a>
+            <a>Meistä</a>
+            <a>Tietosuojaseloste</a>
+            <a>Asiakastuki</a>
           </div>
         </div>
       </footer>
